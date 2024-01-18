@@ -16,10 +16,24 @@ challenges = [
     f'Не юзать {randint(1, 5)} скилл'
 ]
 
-def create():
-    with st.container(border=True):
-        st.header(choice(list(characters.keys())), divider='rainbow')
-        st.subheader(choice(challenges))
-
+def create(pvp: bool):
+    if pvp:
+        with st.container(border=True):
+            st.header(choice(list(characters.keys())), divider='rainbow')
+            st.subheader(choice(challenges))
+    else:
+        with st.container(border=True):
+            st.title('1 Игрок')
+            p1 = choice(list(characters.keys()))
+            st.header(p1, divider='rainbow')
+            st.subheader(choice(challenges))
+            st.title('2 Игрок')
+            while True:
+                p2 = choice(list(characters.keys()))
+                if p2 != p1:
+                    st.header(p2, divider='rainbow')
+                    st.subheader(choice(challenges))
+                    break
 with st.container():
-    st.button('Новый', on_click=lambda: create(), use_container_width=True)
+    st.button('1v1', on_click=lambda: create(True), use_container_width=True)
+    st.button('2v2', on_click=lambda: create(False), use_container_width=True)
